@@ -25,6 +25,6 @@ Luego abre en tu navegador: [http://localhost:3000](http://localhost:3000)
 ## 📂 Estructura
 
 - `pages/index.js` → Landing en Next.js con descripción y eslogan
-- `pages/formulario.js` → Página de formulario (envía a raulsb221@gmail.com)
+- `pages/formulario.js` → Página de formulario (envía a info@lustrix.tech)
 - `pages/gracias.js` → Página de agradecimiento
 - `styles/` → Estilos globales
