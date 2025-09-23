@@ -3,7 +3,7 @@ export default function Formulario() {
     <div className="min-h-screen flex flex-col items-center justify-center bg-black text-white px-6">
       <h1 className="text-3xl font-bold mb-6">Formulario de registro</h1>
       <form 
-        action="https://formsubmit.co/raulsb221@gmail.com" 
+        action="https://formsubmit.co/info@lustrix.tech" 
         method="POST"
         className="w-full max-w-md bg-zinc-900 p-6 rounded-lg shadow-lg"
       >
