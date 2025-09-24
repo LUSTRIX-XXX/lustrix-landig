@@ -7,7 +7,7 @@ export default function Formulario() {
         method="POST"
         className="w-full max-w-md bg-zinc-900 p-6 rounded-lg shadow-lg"
       >
-        <input type="hidden" name="_next" value="https://lustrix-landing-hi96.vercel.app/gracias"/>
+        <input type="hidden" name="_next" value="https://app.lustrix.tech/gracias"/>
         <input type="hidden" name="_captcha" value="false"/>
         <div className="mb-4">
           <label className="block text-left text-sm mb-2">Nombre</label>
