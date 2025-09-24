@@ -1,39 +1,36 @@
-import sendgrid from "@sendgrid/mail";
+import sgMail from "@sendgrid/mail";
 
-sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
     const { email } = req.body;
 
     try {
-      // 1️⃣ Correo al usuario
-      await sendgrid.send({
+      // 📩 Email para el usuario (bienvenida)
+      await sgMail.send({
         to: email,
-        from: { email: "info@lustrix.tech", name: "LUSTRIX Team" },
-        subject: "Bienvenido a LUSTRIX 🚀",
+        from: "info@lustrix.tech", // el remitente verificado en SendGrid
+        subject: "🎉 Bienvenido a LUSTRIX",
         html: `
-          <h1>¡Bienvenido a LUSTRIX!</h1>
-          <p>Gracias por registrarte. Haz clic abajo para entrar a la app:</p>
-          <a href="https://app.lustrix.tech"
-             style="display:inline-block;padding:10px 20px;background:#6a0dad;color:#fff;text-decoration:none;border-radius:5px;">
-             Ir a la App
-          </a>
+          <h1>¡Gracias por unirte a LUSTRIX!</h1>
+          <p>Ya puedes acceder a la app desde aquí:</p>
+          <a href="https://app.lustrix.tech">Entrar en la App</a>
         `,
       });
 
-      // 2️⃣ Copia del registro a ti mismo
-      await sendgrid.send({
+      // 📩 Email para ti (aviso interno)
+      await sgMail.send({
         to: "info@lustrix.tech",
-        from: { email: "info@lustrix.tech", name: "LUSTRIX Bot" },
-        subject: "Nuevo registro en la landing",
-        html: `<p><strong>Email usuario:</strong> ${email}</p>`,
+        from: "info@lustrix.tech",
+        subject: "📥 Nuevo registro en la landing",
+        html: `<p>Nuevo usuario registrado: <strong>${email}</strong></p>`,
       });
 
       res.status(200).json({ success: true });
     } catch (error) {
-      console.error("Error en SendGrid:", error);
-      res.status(500).json({ error: "Error al enviar el correo" });
+      console.error("Error al enviar correo:", error);
+      res.status(500).json({ error: "Error enviando correos" });
     }
   } else {
     res.status(405).json({ error: "Método no permitido" });
