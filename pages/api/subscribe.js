@@ -1,4 +1,4 @@
-import sgMail from "@sendgrid/mail";
+const sgMail = require("@sendgrid/mail");
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -10,7 +10,7 @@ export default async function handler(req, res) {
       // 📩 Email para el usuario (bienvenida)
       await sgMail.send({
         to: email,
-        from: "info@lustrix.tech", // el remitente verificado en SendGrid
+        from: "info@lustrix.tech", // remitente verificado en SendGrid
         subject: "🎉 Bienvenido a LUSTRIX",
         html: `
           <h1>¡Gracias por unirte a LUSTRIX!</h1>
@@ -27,12 +27,12 @@ export default async function handler(req, res) {
         html: `<p>Nuevo usuario registrado: <strong>${email}</strong></p>`,
       });
 
-      res.status(200).json({ success: true });
+      return res.status(200).json({ success: true });
     } catch (error) {
       console.error("Error al enviar correo:", error);
-      res.status(500).json({ error: "Error enviando correos" });
+      return res.status(500).json({ error: "Error enviando correos" });
     }
   } else {
-    res.status(405).json({ error: "Método no permitido" });
+    return res.status(405).json({ error: "Método no permitido" });
   }
 }
