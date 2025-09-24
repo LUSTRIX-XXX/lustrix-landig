@@ -7,35 +7,33 @@ export default async function handler(req, res) {
     const { email } = req.body;
 
     try {
-      // 1️⃣ Email al usuario
+      // 1️⃣ Correo al usuario
       await sendgrid.send({
         to: email,
-        from: "info@lustrix.tech", // tu remitente verificado
+        from: { email: "info@lustrix.tech", name: "LUSTRIX Team" },
         subject: "Bienvenido a LUSTRIX 🚀",
         html: `
           <h1>¡Bienvenido a LUSTRIX!</h1>
-          <p>Gracias por unirte. Ya puedes acceder a la app aquí:</p>
-          <a href="https://app.lustrix.tech" 
+          <p>Gracias por registrarte. Haz clic abajo para entrar a la app:</p>
+          <a href="https://app.lustrix.tech"
              style="display:inline-block;padding:10px 20px;background:#6a0dad;color:#fff;text-decoration:none;border-radius:5px;">
              Ir a la App
           </a>
         `,
       });
 
-      // 2️⃣ Email a tu correo con los datos del usuario
+      // 2️⃣ Copia del registro a ti mismo
       await sendgrid.send({
-        to: "info@lustrix.tech", // tu correo
-        from: "info@lustrix.tech",
+        to: "info@lustrix.tech",
+        from: { email: "info@lustrix.tech", name: "LUSTRIX Bot" },
         subject: "Nuevo registro en la landing",
-        html: `
-          <p><strong>Email:</strong> ${email}</p>
-        `,
+        html: `<p><strong>Email usuario:</strong> ${email}</p>`,
       });
 
-      return res.status(200).json({ success: true });
+      res.status(200).json({ success: true });
     } catch (error) {
-      console.error(error);
-      return res.status(500).json({ error: "Error enviando correos" });
+      console.error("Error en SendGrid:", error);
+      res.status(500).json({ error: "Error al enviar el correo" });
     }
   } else {
     res.status(405).json({ error: "Método no permitido" });
